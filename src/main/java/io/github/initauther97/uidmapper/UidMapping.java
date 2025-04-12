@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.Map;
 import java.util.UUID;
@@ -16,10 +17,10 @@ public class UidMapping {
         Map<String, UUID> data = Map.of();
         try (final var reader = Files.newBufferedReader(path)) {
             data = gson.fromJson(reader, new TypeToken<>() {});
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | NoSuchFileException e) {
             UUIDMapper.LOGGER.info("Creating UUID mapping file for the first time");
         } catch (IOException e) {
-            UUIDMapper.LOGGER.error("Cannot read config file");
+            UUIDMapper.LOGGER.error("Cannot read config file", e);
         }
         return data;
     }

@@ -116,8 +116,9 @@ public class UUIDMapper
             event.getLevel().getServer().getPlayerList().broadcastSystemMessage(Messages.SAVE_FAILED, true);
         } else {
             event.getLevel().getServer().getPlayerList().broadcastSystemMessage(Messages.SAVE_SUCCESS, false);
+            dirty = false;
         }
-        dirty = true;
+
     }
 
     @SubscribeEvent
